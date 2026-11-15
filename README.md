@@ -1,6 +1,16 @@
 # AutoFix Garage — Beginner-Friendly REST API
 
-AutoFix Garage is a small backend API for managing service bays, mechanics, and repair assignments. It uses beginner-level CommonJS JavaScript, Express, and SQLite. The project demonstrates the Node.js, Express, relational database, CRUD, REST, validation, and API-testing topics in the course syllabus.
+AutoFix Garage is a small backend API for managing service bays, mechanics, and repair assignments. It uses beginner-level CommonJS JavaScript, Express, and SQLite to meet the client brief requirements.
+
+## Group members and responsibilities
+
+| No. | Group member | Registration number | Responsibility |
+| --- | --- | --- | --- |
+| 1 | Namra |  | Express server, app routing, and README: starts the API, connects the resource routers, and explains how to run the project. |
+| 2 | Bhagya |  | Bay and mechanic REST endpoints: handles CRUD requests and bay search by vehicle. |
+| 3 | Sagarika |  | Assignment REST endpoints: handles assignment CRUD and the join that shows mechanic and bay names. |
+| 4 | Sirisha |  | SQLite database: explains the three tables, primary keys, foreign keys, constraints, and sample records. |
+| 5 | Sarika |  | Validation and API checks: explains allowed values and error messages, and demonstrates the twist tests and Postman collection. |
 
 ## Client brief requirements
 
@@ -16,29 +26,6 @@ AutoFix Garage is a small backend API for managing service bays, mechanics, and 
 | GitHub, Postman collection, and README hand-in | This repository contains the source, `postman/AutoFix Garage.postman_collection.json`, and this README. |
 
 The required twist values are case-sensitive: `Car`, `Bike`, and `Truck`. Another value, such as `Other`, must be rejected with HTTP 400 and a message listing all three allowed values.
-
-## Team work and file responsibilities
-
-The table below is the group's responsibility and presentation split. It explains which part each member should be ready to describe and how that part works. It is not a claim about who authored a particular Git commit; Git history shows the actual pushed changes.
-
-| Member | Main files | Responsibility and how the part works |
-| --- | --- | --- |
-| **Namra** | `server.js`, `src/app.js`, `README.md` | Starts the API, configures Express JSON handling, mounts the routers, handles unknown routes and errors, and documents setup and demonstrations. |
-| **Bhagya** | `src/routes/bays.js`, `src/routes/mechanics.js` | Explains the bay and mechanic CRUD endpoints. Each route reads request data, checks required fields, runs a parameterized SQLite query, and sends a JSON response. The bay routes also search by vehicle. |
-| **Sagarika** | `src/routes/assignments.js` | Explains assignment CRUD and `GET /assignments/with-details`. The join query reads assignment details together with the mechanic and bay names. |
-| **Sirisha** | `src/database.js` | Explains the three-table schema, primary keys, foreign keys, `CHECK` constraints, sample rows, and why a referenced mechanic or bay cannot be deleted. |
-| **Sarika** | `src/helpers.js`, `test/api.test.js`, `postman/AutoFix Garage.postman_collection.json` | Explains the shared input checks and error format, then demonstrates how the automated checks and Postman requests verify validation, search, CRUD, and the required twist. |
-
-Each member should be able to explain the full request path: **Postman → Express → route → validation → SQLite → JSON response**. For individual contribution evidence, each person should commit and push their own work from their GitHub account; this responsibility table alone does not show commit authorship.
-
-## Course syllabus coverage
-
-| Syllabus module | Project examples |
-| --- | --- |
-| **Module 1 — Node.js and Express** | `server.js`, `package.json`, JSON request handling, Express routers, HTTP methods, status codes, and error handling. |
-| **Module 2 — SQLite and relational databases** | Three related tables, primary and foreign keys, constraints, parameterized SQL, CRUD queries, and a join in `src/database.js` and `src/routes/`. |
-| **Module 3 — REST APIs and validation** | Resource endpoints, path IDs, the `vehicle` query parameter, JSON bodies, validation, response formats, Postman, and `node:test`. |
-| **Module 4 — Authentication and user management** | Authentication is not included because the client brief does not ask for accounts, login, passwords, or protected routes. The project stays within the requested assignment scope. |
 
 ## Project files
 
@@ -348,16 +335,3 @@ Run `npm test`. The Node.js built-in `node:test` suite covers 11 checks:
 9. Mechanic create, read, update, and delete work.
 10. Assignment create, read, update, and delete work.
 11. A missing bay returns 404.
-
-## Demo and hand-in checklist
-
-The client brief says to hand in the **GitHub link**, **Postman collection**, and **README**. The Postman collection is committed in `postman/` and can be imported using the steps above. The Word project report is also present in the repository as `PROJET REPORT.docx`.
-
-For the brief's three-minute live demo, a simple sequence is:
-
-1. Start the server and show `GET /health` returning 200.
-2. Run the three required vehicle twist requests and show 201, 400, and 200.
-3. Show `GET /bays?vehicle=Bike` and `GET /assignments/with-details`.
-4. Show the five members' assigned areas and be ready for each person to answer a question about their part.
-
-The brief describes 70 group marks for the build, twist, Postman, and README, and 30 individual marks for the demo answer, commits, and peer rating. Each member should understand their assigned files and push their own changes so the commit history can show individual contributions.
