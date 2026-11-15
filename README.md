@@ -31,12 +31,16 @@ The required twist values are case-sensitive: `Car`, `Bike`, and `Truck`. Anothe
 
 ```text
 server.js                                      Starts the API and opens SQLite
-src/app.js                                     Sets up Express and mounts resource routers
+src/app.js                                     Serves the garage website and mounts API routers
 src/database.js                                Creates tables, constraints, and sample rows
 src/helpers.js                                 Shared input checks and JSON error helper
 src/routes/bays.js                             Bay CRUD and vehicle search
 src/routes/mechanics.js                        Mechanic CRUD
 src/routes/assignments.js                      Assignment CRUD and SQL join
+public/index.html                              AutoFix Garage dashboard page
+public/styles.css                              Dashboard layout and responsive styles
+public/app.js                                  Dashboard forms, search, and API requests
+public/garage-hero.svg                         Garage hero illustration
 test/api.test.js                               11 automated API checks using node:test
 postman/AutoFix Garage.postman_collection.json Importable Postman requests and assertions
 docs/postman-screenshots/                   Screenshots of the API responses and Postman run
@@ -54,7 +58,7 @@ npm install
 npm start
 ```
 
-The API runs at **http://localhost:3000**. Leave this terminal open while using Postman. Press `Ctrl+C` to stop the server. To run the automated checks in a second terminal, use:
+The AutoFix Garage website and API run at **http://localhost:3000**. Open that address in a browser to use the garage dashboard. The API routes such as `/bays`, `/mechanics`, and `/assignments` stay available for Postman. Leave this terminal open while using the site or Postman. Press `Ctrl+C` to stop the server. To run the automated checks in a second terminal, use:
 
 ```sh
 npm test
@@ -62,11 +66,12 @@ npm test
 
 ## API reference
 
-The base URL is `http://localhost:3000`. Requests with a body use JSON and the header `Content-Type: application/json`.
+The API base URL is `http://localhost:3000`. Requests with a body use JSON and the header `Content-Type: application/json`.
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `GET` | `/` | Welcome message and resource list |
+| `GET` | `/` | AutoFix Garage website |
+| `GET` | `/api` | API welcome message and resource list |
 | `GET` | `/health` | Health check |
 | `GET` | `/bays` | List all bays |
 | `GET` | `/bays?vehicle=Car` | Search bays by vehicle (`Car`, `Bike`, or `Truck`) |

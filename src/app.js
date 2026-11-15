@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const path = require("node:path");
 const { createBayRoutes } = require("./routes/bays");
 const { createMechanicRoutes } = require("./routes/mechanics");
 const { createAssignmentRoutes } = require("./routes/assignments");
@@ -11,7 +12,12 @@ function createApp(db) {
   // Read incoming JSON before the route handlers run.
   app.use(express.json());
 
-  app.get("/", (req, res) => {
+  // Serve the original garage dashboard at / and keep /dashboard available.
+  const publicDirectory = path.join(__dirname, "..", "public");
+  app.use(express.static(publicDirectory));
+  app.use("/dashboard", express.static(publicDirectory));
+
+  app.get("/api", (req, res) => {
     res.status(200).json({
       success: true,
       message: "AutoFix Garage API is running.",

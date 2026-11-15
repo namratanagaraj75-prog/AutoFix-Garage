@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#162d50">
+    <title>AutoFix Garage Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles.css">
+    <script src="/dashboard/app.js" defer></script>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="#overview" aria-label="AutoFix Garage home">
+          <span class="brand-mark">AF</span>
+          <span class="brand-copy"><strong>AutoFix</strong><small>GARAGE MANAGER</small></span>
+        </a>
+
+        <p class="nav-label">WORKSPACE</p>
+        <nav class="navigation" aria-label="Main navigation">
+          <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span>Overview</a>
+          <a class="nav-link" href="#bays"><span class="nav-icon">▤</span>Service bays</a>
+          <a class="nav-link" href="#assignments"><span class="nav-icon">↗</span>Assignments</a>
+          <a class="nav-link" href="#team"><span class="nav-icon">♙</span>Mechanics</a>
+          <a class="nav-link" href="#requirements"><span class="nav-icon">✓</span>Brief coverage</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="api-status"><span class="status-dot" id="connection-dot"></span><span id="connection-label">Connecting to API</span></div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumb">GARAGE <span>/</span> OVERVIEW</div>
+          <button class="button button-light" id="refresh-button" type="button"><span class="refresh-icon">↻</span> Refresh data</button>
+        </header>
+
+        <section class="hero-banner">
+          <div class="hero-copy">
+            <p class="eyebrow">WELCOME TO AUTOFIX</p>
+            <h1>Keep every bay moving.</h1>
+            <p class="subheading">Your service team and today's work, all in one place.</p>
+            <div class="hero-meta"><span class="today-chip"><span class="today-dot"></span>Garage is open</span><span class="hero-note">A smoother day starts here.</span></div>
+          </div>
+          <img class="hero-image" src="/dashboard/garage-hero.svg" alt="A car ready for service inside a bright garage">
+        </section>
+
+        <div class="message" id="message" role="status" aria-live="polite" hidden></div>
+
+        <section class="metrics" aria-label="Garage totals">
+          <article class="metric-card metric-blue">
+            <div class="metric-top"><span class="metric-label">SERVICE BAYS</span><span class="metric-icon">▤</span></div>
+            <strong class="metric-value" id="bay-count">—</strong>
+            <span class="metric-note">registered in the garage</span>
+          </article>
+          <article class="metric-card metric-orange">
+            <div class="metric-top"><span class="metric-label">MECHANICS</span><span class="metric-icon">♙</span></div>
+            <strong class="metric-value" id="mechanic-count">—</strong>
+            <span class="metric-note">available in the team list</span>
+          </article>
+          <article class="metric-card metric-violet">
+            <div class="metric-top"><span class="metric-label">ASSIGNMENTS</span><span class="metric-icon">↗</span></div>
+            <strong class="metric-value" id="assignment-count">—</strong>
+            <span class="metric-note">jobs tracked in the garage</span>
+          </article>
+          <article class="metric-card metric-green">
+            <div class="metric-top"><span class="metric-label">OPEN JOBS</span><span class="metric-icon">◷</span></div>
+            <strong class="metric-value" id="open-count">—</strong>
+            <span class="metric-note">pending or in progress</span>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel" id="bays">
+            <div class="panel-heading">
+              <div><p class="eyebrow">WORK AREAS</p><h2>Service bays</h2></div>
+              <label class="filter-label" for="vehicle-filter">Vehicle
+                <select id="vehicle-filter">
+                  <option value="">All vehicles</option>
+                  <option value="Car">Car</option>
+                  <option value="Bike">Bike</option>
+                  <option value="Truck">Truck</option>
+                </select>
+              </label>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Bay</th><th>Vehicle</th><th>ID</th><th>Actions</th></tr></thead>
+                <tbody id="bays-table"><tr><td colspan="4" class="empty">Loading bays…</td></tr></tbody>
+              </table>
+            </div>
+            <p class="panel-foot">Search uses the query parameter <code>GET /bays?vehicle=Bike</code>.</p>
+            <form id="bay-form" class="manage-form">
+              <div class="form-heading"><strong id="bay-form-title">Add a service bay</strong><span class="form-hint">POST or PUT /bays</span></div>
+              <input id="bay-id" type="hidden" value="">
+              <div class="form-fields two-fields">
+                <label>Bay name<input id="bay-name" name="name" placeholder="e.g. North Service Bay" required maxlength="80"></label>
+                <label>Vehicle type<select id="bay-vehicle" name="vehicle" required><option value="Car">Car</option><option value="Bike">Bike</option><option value="Truck">Truck</option></select></label>
+              </div>
+              <div class="form-actions"><button class="button button-primary" type="submit" id="bay-submit">Add bay</button><button class="button button-light cancel-button" type="button" id="bay-cancel" hidden>Cancel edit</button></div>
+              <p class="allowed-note">Only Car, Bike, and Truck are accepted. Other values return HTTP 400.</p>
+            </form>
+          </article>
+
+          <article class="panel" id="team">
+            <div class="panel-heading">
+              <div><p class="eyebrow">PEOPLE</p><h2>Mechanics</h2></div>
+              <span class="count-pill" id="team-pill">— members</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Specialty</th><th>ID</th><th>Actions</th></tr></thead>
+                <tbody id="mechanics-table"><tr><td colspan="4" class="empty">Loading mechanics…</td></tr></tbody>
+              </table>
+            </div>
+            <form id="mechanic-form" class="manage-form">
+              <div class="form-heading"><strong id="mechanic-form-title">Add a mechanic</strong><span class="form-hint">POST or PUT /mechanics</span></div>
+              <input id="mechanic-id" type="hidden" value="">
+              <div class="form-fields">
+                <label>Mechanic name<input id="mechanic-name" name="name" placeholder="e.g. Sam Patel" required maxlength="80"></label>
+                <label>Specialty<input id="mechanic-specialty" name="specialty" placeholder="e.g. Brake repair" required maxlength="100"></label>
+              </div>
+              <div class="form-actions"><button class="button button-primary" type="submit" id="mechanic-submit">Add mechanic</button><button class="button button-light cancel-button" type="button" id="mechanic-cancel" hidden>Cancel edit</button></div>
+            </form>
+          </article>
+        </section>
+
+        <section class="content-grid lower-grid">
+          <article class="panel" id="assignments">
+            <div class="panel-heading">
+              <div><p class="eyebrow">CURRENT WORK</p><h2>Job assignments</h2></div>
+              <span class="count-pill" id="jobs-pill">— jobs</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>Mechanic</th><th>Bay</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="assignments-table"><tr><td colspan="5" class="empty">Loading assignments…</td></tr></tbody>
+              </table>
+            </div>
+            <p class="panel-foot">Names come from <code>GET /assignments/with-details</code> (SQLite JOIN).</p>
+            <form id="assignment-form" class="manage-form">
+              <div class="form-heading"><strong id="assignment-form-title">Add an assignment</strong><span class="form-hint">POST or PUT /assignments</span></div>
+              <input id="assignment-id" type="hidden" value="">
+              <div class="form-fields two-fields">
+                <label>Mechanic<select id="assignment-mechanic" name="mechanicId" required></select></label>
+                <label>Service bay<select id="assignment-bay" name="bayId" required></select></label>
+                <label class="wide-field">Job description<input id="assignment-job" name="jobDescription" placeholder="e.g. Check the brakes" required maxlength="160"></label>
+                <label>Status<select id="assignment-status" name="status" required><option>Pending</option><option>In Progress</option><option>Completed</option></select></label>
+              </div>
+              <div class="form-actions"><button class="button button-primary" type="submit" id="assignment-submit">Add assignment</button><button class="button button-light cancel-button" type="button" id="assignment-cancel" hidden>Cancel edit</button></div>
+            </form>
+          </article>
+
+          <article class="panel coverage-panel" id="requirements">
+            <div class="panel-heading">
+              <div><p class="eyebrow">CLIENT BRIEF</p><h2>Brief coverage</h2></div>
+              <span class="coverage-mark">✓</span>
+            </div>
+            <ul class="coverage-list">
+              <li><span class="check">✓</span><span><strong>Express routes</strong><small>Bays, mechanics, and assignments</small></span></li>
+              <li><span class="check">✓</span><span><strong>SQLite relationships</strong><small>Three linked tables with foreign keys</small></span></li>
+              <li><span class="check">✓</span><span><strong>CRUD and status codes</strong><small>GET 200 · POST 201 · PUT 200 · DELETE 200</small></span></li>
+              <li><span class="check">✓</span><span><strong>Joined assignment names</strong><small>Mechanic and bay names appear with each job</small></span></li>
+              <li><span class="check">✓</span><span><strong>Validation and search</strong><small>Clear errors and vehicle query filter</small></span></li>
+            </ul>
+            <div class="twist-box">
+              <p class="eyebrow">REQUIRED VEHICLE TWIST</p>
+              <div class="twist-row"><span>Car bay</span><code>201 Created</code></div>
+              <div class="twist-row"><span>Other vehicle</span><code>400 Bad Request + allowed values</code></div>
+              <div class="twist-row"><span>Update bay to Bike</span><code>200 OK</code></div>
+            </div>
+          </article>
+        </section>
+
+        <footer class="footer"><span>AutoFix Garage</span><span>Service management made simple</span></footer>
+      </main>
+    </div>
+  </body>
+</html>
