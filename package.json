@@ -1,0 +1,19 @@
+{
+  "name": "autofix-garage-beginner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Beginner-friendly Express and SQLite API for the AutoFix Garage assignment.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}

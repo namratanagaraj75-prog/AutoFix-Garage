@@ -1,0 +1,170 @@
+{
+  "info": {
+    "name": "AutoFix Garage API",
+    "description": "Full API walkthrough for the AutoFix Garage assignment. Run from top to bottom. The first three requests are the required vehicle validation tests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "carBayId", "value": "", "type": "string" },
+    { "key": "demoBayId", "value": "", "type": "string" },
+    { "key": "mechanicId", "value": "", "type": "string" },
+    { "key": "assignmentId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Required twist tests",
+      "item": [
+        {
+          "name": "Test 1 - Add Car bay (201)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Twist Test Bay\",\n  \"vehicle\": \"Car\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/bays"
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "type": "text/javascript", "exec": [
+              "pm.test('Car bay is created with 201', function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test('created bay has vehicle Car', function () { pm.expect(body.data.vehicle).to.eql('Car'); });",
+              "pm.collectionVariables.set('carBayId', body.data.id);"
+            ] }
+          }]
+        },
+        {
+          "name": "Test 2 - Reject Other vehicle (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Invalid Test Bay\",\n  \"vehicle\": \"Other\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/bays"
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "type": "text/javascript", "exec": [
+              "pm.test('invalid vehicle is rejected with 400', function () { pm.response.to.have.status(400); });",
+              "const body = pm.response.json();",
+              "pm.test('error lists all allowed values', function () { pm.expect(body.error).to.include('Car, Bike, Truck'); });"
+            ] }
+          }]
+        },
+        {
+          "name": "Test 3 - Update bay to Bike (200)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Twist Test Bay\",\n  \"vehicle\": \"Bike\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/bays/{{carBayId}}"
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "type": "text/javascript", "exec": [
+              "pm.test('bay update succeeds with 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('updated bay has vehicle Bike', function () { pm.expect(pm.response.json().data.vehicle).to.eql('Bike'); });"
+            ] }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "Bays - list, search, and CRUD",
+      "item": [
+        { "name": "List all bays", "request": { "method": "GET", "url": "{{baseUrl}}/bays" } },
+        { "name": "Search bays by vehicle", "request": { "method": "GET", "url": "{{baseUrl}}/bays?vehicle=Bike" } },
+        { "name": "Get the twist test bay", "request": { "method": "GET", "url": "{{baseUrl}}/bays/{{carBayId}}" } },
+        {
+          "name": "Create demo bay",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Demo Bay\",\n  \"vehicle\": \"Truck\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/bays"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('demo bay is created', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('demoBayId', pm.response.json().data.id);"
+          ] } }]
+        },
+        {
+          "name": "Update demo bay",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Demo Bay Updated\",\n  \"vehicle\": \"Bike\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/bays/{{demoBayId}}"
+          }
+        },
+        { "name": "Delete demo bay", "request": { "method": "DELETE", "url": "{{baseUrl}}/bays/{{demoBayId}}" } }
+      ]
+    },
+    {
+      "name": "Mechanics - list and CRUD",
+      "item": [
+        { "name": "List mechanics", "request": { "method": "GET", "url": "{{baseUrl}}/mechanics" } },
+        { "name": "Get seeded mechanic 1", "request": { "method": "GET", "url": "{{baseUrl}}/mechanics/1" } },
+        {
+          "name": "Create demo mechanic",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Demo Mechanic\",\n  \"specialty\": \"General repair\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/mechanics"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('demo mechanic is created', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('mechanicId', pm.response.json().data.id);"
+          ] } }]
+        },
+        {
+          "name": "Update demo mechanic",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Demo Mechanic Updated\",\n  \"specialty\": \"Brake repair\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/mechanics/{{mechanicId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assignments - CRUD and joined names",
+      "item": [
+        { "name": "List assignments", "request": { "method": "GET", "url": "{{baseUrl}}/assignments" } },
+        {
+          "name": "Create demo assignment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mechanicId\": {{mechanicId}},\n  \"bayId\": {{carBayId}},\n  \"jobDescription\": \"Inspect the demonstration vehicle\",\n  \"status\": \"Pending\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/assignments"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('demo assignment is created', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('assignmentId', pm.response.json().data.id);"
+          ] } }]
+        },
+        { "name": "Get assignment with mechanic and bay names", "request": { "method": "GET", "url": "{{baseUrl}}/assignments/with-details" } },
+        { "name": "Get demo assignment", "request": { "method": "GET", "url": "{{baseUrl}}/assignments/{{assignmentId}}" } },
+        {
+          "name": "Update demo assignment",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mechanicId\": {{mechanicId}},\n  \"bayId\": {{carBayId}},\n  \"jobDescription\": \"Complete the demonstration inspection\",\n  \"status\": \"In Progress\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/assignments/{{assignmentId}}"
+          }
+        },
+        { "name": "Delete demo assignment", "request": { "method": "DELETE", "url": "{{baseUrl}}/assignments/{{assignmentId}}" } }
+      ]
+    },
+    {
+      "name": "Cleanup demo records",
+      "item": [
+        { "name": "Delete demo mechanic", "request": { "method": "DELETE", "url": "{{baseUrl}}/mechanics/{{mechanicId}}" } },
+        { "name": "Delete twist test bay", "request": { "method": "DELETE", "url": "{{baseUrl}}/bays/{{carBayId}}" } }
+      ]
+    }
+  ]
+}
