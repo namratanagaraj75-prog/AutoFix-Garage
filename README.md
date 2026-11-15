@@ -1,4 +1,4 @@
-# AutoFix Garage — Beginner-Friendly REST API
+# AutoFix Garage
 
 AutoFix Garage is a small backend API for managing service bays, mechanics, and repair assignments. It uses beginner-level CommonJS JavaScript, Express, and SQLite to meet the client brief requirements.
 
@@ -6,11 +6,11 @@ AutoFix Garage is a small backend API for managing service bays, mechanics, and 
 
 | No. | Group member | Registration number | Responsibility |
 | --- | --- | --- | --- |
-| 1 | Namra |  | Express server, app routing, and README: starts the API, connects the resource routers, and explains how to run the project. |
-| 2 | Bhagya |  | Bay and mechanic REST endpoints: handles CRUD requests and bay search by vehicle. |
-| 3 | Sagarika |  | Assignment REST endpoints: handles assignment CRUD and the join that shows mechanic and bay names. |
-| 4 | Sirisha |  | SQLite database: explains the three tables, primary keys, foreign keys, constraints, and sample records. |
-| 5 | Sarika |  | Validation and API checks: explains allowed values and error messages, and demonstrates the twist tests and Postman collection. |
+| 1 | Namra |252U1R5111  | Express server, app routing, and README: starts the API, connects the resource routers, and explains how to run the project. |
+| 2 | Bhagya |252U1R5108  | Bay and mechanic REST endpoints: handles CRUD requests and bay search by vehicle. |
+| 3 | Sagarika |252U1R5105  | Assignment REST endpoints: handles assignment CRUD and the join that shows mechanic and bay names. |
+| 4 | Sirisha |252U1R5109  | SQLite database: explains the three tables, primary keys, foreign keys, constraints, and sample records. |
+| 5 | Sarika |252U1R5090  | Validation and API checks: explains allowed values and error messages, and demonstrates the twist tests and Postman collection. |
 
 ## Client brief requirements
 
