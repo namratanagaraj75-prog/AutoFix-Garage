@@ -318,39 +318,39 @@ These screenshots show Postman responses and collection runs for the required ve
 
 **List all bays**
 
-![Postman GET bays response with HTTP 200](docs/postman-screenshots/02-list-bays.png)
+![Postman GET bays response with HTTP 200](docs/postman-screenshots/02-list-bays-cropped.png)
 
 **Search bays by vehicle**
 
-![Postman search for Car bays with HTTP 200](docs/postman-screenshots/03-search-bays-by-car.png)
+![Postman search for Car bays with HTTP 200](docs/postman-screenshots/03-search-bays-by-car-cropped.png)
 
 **Create a Car bay (HTTP 201)**
 
-![Postman creates a bay with vehicle Car and returns HTTP 201](docs/postman-screenshots/04-create-car-bay-201.png)
+![Postman creates a bay with vehicle Car and returns HTTP 201](docs/postman-screenshots/04-create-car-bay-201-cropped.png)
 
 **Reject an unsupported vehicle (HTTP 400)**
 
-![Postman rejects vehicle Other and lists Car, Bike, and Truck](docs/postman-screenshots/05-reject-other-400.png)
+![Postman rejects vehicle Other and lists Car, Bike, and Truck](docs/postman-screenshots/05-reject-other-400-cropped.png)
 
 **Update a bay to Bike (HTTP 200)**
 
-![Postman updates the bay vehicle to Bike and returns HTTP 200](docs/postman-screenshots/06-update-bay-to-bike-200.png)
+![Postman updates the bay vehicle to Bike and returns HTTP 200](docs/postman-screenshots/06-update-bay-to-bike-200-cropped.png)
 
 **Assignment join response**
 
-![Postman assignment join response includes mechanic and bay names](docs/postman-screenshots/07-assignment-join.png)
+![Postman assignment join response includes mechanic and bay names](docs/postman-screenshots/07-assignment-join-cropped.png)
 
 **Required tests and bay requests in the collection runner**
 
-![Postman collection runner shows required twist checks and bay requests](docs/postman-screenshots/08-postman-run-required-tests.png)
+![Postman collection runner shows required twist checks and bay requests](docs/postman-screenshots/08-postman-run-required-tests-cropped.png)
 
 **Bay and mechanic requests in the collection runner**
 
-![Postman collection runner shows bay CRUD and mechanic requests](docs/postman-screenshots/09-postman-run-bays-mechanics.png)
+![Postman collection runner shows bay CRUD and mechanic requests](docs/postman-screenshots/09-postman-run-bays-mechanics-cropped.png)
 
 **Assignment requests in the collection runner**
 
-![Postman collection runner shows assignment CRUD, join, and cleanup](docs/postman-screenshots/10-postman-run-assignments.png)
+![Postman collection runner shows assignment CRUD, join, and cleanup](docs/postman-screenshots/10-postman-run-assignments-cropped.png)
 
 ## How the database and a route work
 
