@@ -6,7 +6,7 @@ AutoFix Garage is a small backend API for managing service bays, mechanics, and 
 
 | No. | Group member | Registration number | Responsibility |
 | --- | --- | --- | --- |
-| 1 | Namra |252U1R5111  | Express server, app routing, and README: starts the API, connects the resource routers, and explains how to run the project. |
+| 1 | Namrata |252U1R5111  | Express server, app routing, and README: starts the API, connects the resource routers, and explains how to run the project. |
 | 2 | Bhagya |252U1R5108  | Bay and mechanic REST endpoints: handles CRUD requests and bay search by vehicle. |
 | 3 | Sagarika |252U1R5115  | Assignment REST endpoints: handles assignment CRUD and the join that shows mechanic and bay names. |
 | 4 | Sirisha |252U1R5109  | SQLite database: explains the three tables, primary keys, foreign keys, constraints, and sample records. |
