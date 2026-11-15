@@ -64,6 +64,14 @@ The AutoFix Garage website and API run at **http://localhost:3000**. Open that a
 npm test
 ```
 
+## Live deployment
+
+- **Website:** [https://autofix-garage-backend.onrender.com/](https://autofix-garage-backend.onrender.com/)
+- **API welcome:** [https://autofix-garage-backend.onrender.com/api](https://autofix-garage-backend.onrender.com/api)
+- **Health check:** [https://autofix-garage-backend.onrender.com/health](https://autofix-garage-backend.onrender.com/health)
+
+The free Render service may sleep after inactivity, so the first page load can take longer. The Postman collection defaults to the local address; set its `baseUrl` variable to `https://autofix-garage-backend.onrender.com` to send requests to the deployed API.
+
 ## API reference
 
 The API base URL is `http://localhost:3000`. Requests with a body use JSON and the header `Content-Type: application/json`.
@@ -306,45 +314,41 @@ The collection then stores the returned assignment ID as `assignmentId`. The rem
 
 ## Postman screenshot evidence
 
-These screenshots show the local API responses and the Postman collection run for the required vehicle checks, bay search, CRUD routes, and assignment join.
+These screenshots show Postman responses and collection runs for the required vehicle checks, bay search, CRUD routes, and assignment join.
 
-**Screenshot 1 — API running and welcome response**
-
-![API server running locally with the root endpoint response](docs/postman-screenshots/01-api-running.png)
-
-**Screenshot 2 — List all bays**
+**List all bays**
 
 ![Postman GET bays response with HTTP 200](docs/postman-screenshots/02-list-bays.png)
 
-**Screenshot 3 — Search bays by vehicle**
+**Search bays by vehicle**
 
 ![Postman search for Car bays with HTTP 200](docs/postman-screenshots/03-search-bays-by-car.png)
 
-**Screenshot 4 — Create a Car bay (HTTP 201)**
+**Create a Car bay (HTTP 201)**
 
 ![Postman creates a bay with vehicle Car and returns HTTP 201](docs/postman-screenshots/04-create-car-bay-201.png)
 
-**Screenshot 5 — Reject an unsupported vehicle (HTTP 400)**
+**Reject an unsupported vehicle (HTTP 400)**
 
 ![Postman rejects vehicle Other and lists Car, Bike, and Truck](docs/postman-screenshots/05-reject-other-400.png)
 
-**Screenshot 6 — Update a bay to Bike (HTTP 200)**
+**Update a bay to Bike (HTTP 200)**
 
 ![Postman updates the bay vehicle to Bike and returns HTTP 200](docs/postman-screenshots/06-update-bay-to-bike-200.png)
 
-**Screenshot 7 — Assignment join response**
+**Assignment join response**
 
 ![Postman assignment join response includes mechanic and bay names](docs/postman-screenshots/07-assignment-join.png)
 
-**Screenshot 8 — Required tests and bay requests in the collection runner**
+**Required tests and bay requests in the collection runner**
 
 ![Postman collection runner shows required twist checks and bay requests](docs/postman-screenshots/08-postman-run-required-tests.png)
 
-**Screenshot 9 — Bay and mechanic requests in the collection runner**
+**Bay and mechanic requests in the collection runner**
 
 ![Postman collection runner shows bay CRUD and mechanic requests](docs/postman-screenshots/09-postman-run-bays-mechanics.png)
 
-**Screenshot 10 — Assignment requests in the collection runner**
+**Assignment requests in the collection runner**
 
 ![Postman collection runner shows assignment CRUD, join, and cleanup](docs/postman-screenshots/10-postman-run-assignments.png)
 
